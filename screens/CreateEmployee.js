@@ -30,7 +30,16 @@ const CreateEmployee = () => {
             
             
             })
-            console.log(data)
+
+            if(!data.cancelled){
+
+                let newfile ={ 
+                    uri:data.uri,
+                    type: `test/${data.uri.split(".")[1]}`,
+                    name:`test.${data.uri.split(".")[1]}`
+                }
+                handleUpload(newfile)
+            }
 
         }else{
 
@@ -59,7 +68,16 @@ const CreateEmployee = () => {
             
             
             })
-            console.log(data)
+
+            if(!data.cancelled){
+
+                let newfile ={ 
+                    uri:data.uri,
+                    type: `test/${data.uri.split(".")[1]}`,
+                    name:`test.${data.uri.split(".")[1]}`
+                }
+                handleUpload(newfile)
+            }
 
         }else{
 
@@ -83,10 +101,12 @@ const CreateEmployee = () => {
 
             method:"post",
             body:data
-        }).then(res=>res.json())
+        }).then(res=>res.json()).
         then(data=>{
 
-            console.log(data)
+            
+            setPicture(data.url)
+            setModal(false)
         })
 
     }
@@ -132,7 +152,7 @@ const CreateEmployee = () => {
 
             <Button 
             style={styles.inputStyle}
-            icon="upload" 
+            icon={picture==""?"upload":"check"}
             mode="contained" 
             theme={theme}
             onPress={() => setModal(true)}>
