@@ -1,9 +1,8 @@
 import React from 'react';
 import { StyleSheet, Text, View, Image, FlatList } from 'react-native';
-import { baseProps } from 'react-native-gesture-handler/lib/typescript/handlers/gestureHandlers';
 import { Card,FAB } from 'react-native-paper'
 
-const Home = (props) => {
+const Home = ({navigation}) => {
 
 
     const data = [
@@ -15,27 +14,17 @@ const Home = (props) => {
         { id: 5, name: "sita", position: "web dev" },
         { id: 6, name: "sita", position: "web dev" },
         { id: 7, name: "sita", position: "web dev" },
-        { id: 8, name: "sita", position: "web dev" },
-        { id: 9, name: "sita", position: "web dev" },
-        { id: 10, name: "sita", position: "web dev" },
-        { id: 11, name: "sita", position: "web dev" },
-        { id: 12, name: "ramita", position: "web dev" },
-        { id: 13, name: "ramita", position: "web dev" },
-        { id: 14, name: "ramita", position: "web dev" },
-        { id: 15, name: "ramita", position: "web dev" },
-        { id: 16, name: "ramita", position: "web dev" },
-        { id: 17, name: "ramita", position: "web dev" },
-        { id: 18, name: "ramita", position: "web dev" },
-        { id: 19, name: "ramita", position: "web dev" },
-        { id: 20, name: "ramita", position: "web dev" },
-        { id: 21, name: "ramita", position: "web dev" },
+       
     ]
 
     const renderList = ((item) => {
 
         return (
 
-            <Card style={styles.mycard}>
+            <Card 
+             style={styles.mycard}
+             onPress={()=>navigation.navigate("Profile")}
+             >
                 <View style={styles.cardView}>
                     <Image
                         style={{ width: 60, height: 60, borderRadius: 30 }}
@@ -56,7 +45,7 @@ const Home = (props) => {
 
     return (
 
-        <View>
+        <View style={{flex:1}}>
             <FlatList
 
                 data={data}
@@ -69,12 +58,12 @@ const Home = (props) => {
             />
 
 
-            <FAB onPress={()=>props.navigation.navigate("Create")}
+            <FAB onPress={()=>navigation.navigate("Create")}
                 style={styles.fab}
                 small={false}
                 icon="plus"
-                theme={{colors:{accent:"#3498db"}}}
-                onPress={() => console.log('Pressed')}
+                theme={{colors:{primary:"#3498db"}}}
+                
             />
 
         </View>
