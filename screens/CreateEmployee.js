@@ -5,14 +5,50 @@ import * as ImagePicker from 'expo-image-picker';
 import * as Permissions from 'expo-permissions';
 
 
-const CreateEmployee = () => {
+const CreateEmployee = ({navigation}) => {
 
     const [name, setName] = useState("")
+    const [position, setPosition] = useState("")
     const [phone, setPhone] = useState("")
     const [email, setEmail] = useState("")
     const [salary, setSalary] = useState("")
     const [picture, setPicture] = useState("")
     const [modal, setModal] = useState(false)
+
+
+    const submitData = ()=>{
+
+
+        fetch("http://10.0.2.2:3000/send-data",{
+
+
+            method:"post",
+            headers:{
+
+                'Content-type': 'application/json'
+
+            },
+            body:JSON.stringify({
+
+                name,
+                position,
+                email,
+                phone,
+                salary,
+                picture
+
+
+            })
+            
+        })
+        .then(res=>res.json())
+        .then(data=>{
+            Alert.alert(`Employee ${data.name} is created.`)
+            navigation.navigate("Home")
+
+        })
+
+    }
 
 
 
@@ -115,6 +151,8 @@ const CreateEmployee = () => {
 
 
         <View style={styles.root}>
+
+            
             <TextInput
                 label='Name'
                 style={styles.inputStyle}
@@ -122,6 +160,14 @@ const CreateEmployee = () => {
                 mode="outlined"
                 theme={theme}
                 onChangeText={text => setName(text)}
+            />
+            <TextInput
+                label='Position'
+                style={styles.inputStyle}
+                value={position}
+                mode="outlined"
+                theme={theme}
+                onChangeText={text => setPosition(text)}
             />
             <TextInput
                 label='Email'
@@ -165,7 +211,7 @@ const CreateEmployee = () => {
             icon="content-save" 
             mode="contained" 
             theme={theme}
-            onPress={() => console.log("saved")}>
+            onPress={() => submitData()}>
                 Save
             </Button>
 
@@ -209,6 +255,7 @@ const CreateEmployee = () => {
                 </View>
 
             </Modal>
+           
 
         </View>
 

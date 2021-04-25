@@ -8,7 +8,7 @@ import { MaterialIcons } from '@expo/vector-icons';
 const Profile = (props)=>{
 
     
-    const {id, name, position, email, phone,salary, picture}= props.route.params.item
+    const {_id, name, position, email, phone,salary, picture}= props.route.params.item
     const openDail=()=>{
 
         if(Platform.OS === "android"){
