@@ -1,11 +1,32 @@
 import React,{useEffect,useState} from 'react';
-import { StyleSheet, Text, View, Image, FlatList,ActivityIndicator } from 'react-native';
-import { Card,FAB } from 'react-native-paper'
+import { StyleSheet, Text, View, Image, FlatList,Alert,ActivityIndicator } from 'react-native';
+import { Title, Card,FAB } from 'react-native-paper'
 
 const Home = ({navigation}) => {
 
     const [data,setData] = useState([])
     const [loading,setLoading] = useState(true)
+
+    const fetchData = ()=>{
+
+
+
+        fetch("http://10.0.2.2:3000/")
+
+        .then(res=>res.json())
+        .then(results=>{
+
+            setData(results)
+            setLoading(false)
+
+        }).catch(err=>{
+
+            Alert.alert("Something went wrong")
+        })
+
+    }
+
+
     useEffect(()=>{
 
         fetch("http://10.0.2.2:3000/")
@@ -34,8 +55,8 @@ const Home = ({navigation}) => {
                         source={{ uri:item.picture }}
                     />
                     <View style={{ marginLeft: 10 }}>
-                        <Text style={styles.text}>{item.name}</Text>
-                        <Text style={styles.text}>{item.position}</Text>
+                        <Title>{item.name}</Title>
+                        <Text style={{fontSize:15}}>{item.position}</Text>
                     </View>
 
 
@@ -61,6 +82,8 @@ const Home = ({navigation}) => {
                     return renderList(item)
                 }}
                 keyExtractor={item => item._id}
+                onRefresh={()=>fetchData()}
+                refreshing={loading}
 
             />
             
@@ -98,10 +121,6 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         padding: 6
 
-    },
-    text: {
-
-        fontSize: 18
     },
 
     fab: {

@@ -47,6 +47,10 @@ const CreateEmployee = ({navigation}) => {
             navigation.navigate("Home")
 
         })
+        .catch(err=>{
+
+            Alert.alert("Something went wrong")
+        })
 
     }
 
@@ -143,6 +147,10 @@ const CreateEmployee = ({navigation}) => {
             
             setPicture(data.url)
             setModal(false)
+        })
+        .catch(err=>{
+
+            Alert.alert("Something went wrong")
         })
 
     }

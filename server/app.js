@@ -80,7 +80,7 @@ app.post('/send-data',(req,res)=>{
 app.post('/delete',(req,res)=>{
 
 
-    Employee.findByIdAndRemove(req.body.id)
+    Employee.findByIdAndRemove(req.body._id)
     .then(data=>{
 
         console.log(data)
@@ -94,7 +94,7 @@ app.post('/delete',(req,res)=>{
 
 app.post('/update',(req,res)=>{
 
-    Employee.findByIdAndUpdate(req.body.id, {
+    Employee.findByIdAndUpdate(req.body._id, {
 
         name:req.body.name,
         position:req.body.position,

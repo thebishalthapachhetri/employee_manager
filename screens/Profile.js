@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View ,Image,Linking, Platform } from 'react-native'; 
+import { StyleSheet, Text, View ,Image,Linking, Platform, Alert } from 'react-native'; 
 import { LinearGradient } from 'expo-linear-gradient';
 import {Title,Card,Button} from 'react-native-paper';
 import { MaterialIcons } from '@expo/vector-icons';
@@ -9,16 +9,47 @@ const Profile = (props)=>{
 
     
     const {_id, name, position, email, phone,salary, picture}= props.route.params.item
+ 
+    const deleteEmployee = ()=>{
+
+        fetch("http://10.0.2.2:3000/delete",{
+
+            method:"post",
+            headers:{
+                'Content-Type':'application/json'
+            },
+            body:JSON.stringify({
+                _id
+            })
+
+
+
+        })
+            .then(res=>res.json())
+            .then(deleteEmployee=>{
+
+                Alert.alert(`${deleteEmployee.name} is deleted`)
+                props.navigation.navigate("Home")
+            })
+            .catch(err=>{
+
+                Alert.alert("Something went wrong")
+            })
+
+    }
+
+
+
     const openDail=()=>{
 
         if(Platform.OS === "android"){
             
-            Linking.openURL("tel:123456")
+            Linking.openURL(`tel:${phone}`)
 
         }
 
         else{
-            Linking.openURL("telpromt:123456")
+            Linking.openURL(`telpromt:${phone}`)
 
         }
 
@@ -58,7 +89,7 @@ const Profile = (props)=>{
 
             <Card style={styles.myCard} onPress={()=>{
 
-                Linking.openURL("mailto:bishal.com")
+                Linking.openURL(`mailto:${email}`)
             }}>
 
                 <View style={styles.cardContent}>
@@ -105,7 +136,7 @@ const Profile = (props)=>{
                     icon="delete"
                     mode="contained"
                     theme={theme}  
-                    onPress={() => console.log("pressed")}>
+                    onPress={() => deleteEmployee()}>
                             delete
                 </Button>
 
