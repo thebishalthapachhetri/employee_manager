@@ -1,8 +1,9 @@
 import React from 'react';
 import { StyleSheet, Text, View, Image, FlatList } from 'react-native';
+import { baseProps } from 'react-native-gesture-handler/lib/typescript/handlers/gestureHandlers';
 import { Card,FAB } from 'react-native-paper'
 
-const Home = () => {
+const Home = (props) => {
 
 
     const data = [
@@ -68,7 +69,7 @@ const Home = () => {
             />
 
 
-            <FAB
+            <FAB onPress={()=>props.navigation.navigate("Create")}
                 style={styles.fab}
                 small={false}
                 icon="plus"

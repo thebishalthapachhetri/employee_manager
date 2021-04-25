@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View ,Image } from 'react-native'; 
+import { StyleSheet, Text, View ,Image,Linking, Platform } from 'react-native'; 
 import { LinearGradient } from 'expo-linear-gradient';
 import {Title,Card,Button} from 'react-native-paper';
 import { MaterialIcons } from '@expo/vector-icons';
@@ -7,7 +7,28 @@ import { MaterialIcons } from '@expo/vector-icons';
 
 const Profile = ()=>{
 
+    
+    const openDail=()=>{
+
+        if(Platform.OS === "android"){
+            
+            Linking.openURL("tel:123456")
+
+        }
+
+        else{
+            Linking.openURL("telpromt:123456")
+
+        }
+
+
+
+    }
+
+    
     return(
+
+
 
         <View style={styles.root}>
 
@@ -32,8 +53,12 @@ const Profile = ()=>{
 
 
             </View>
+        
 
-            <Card style={styles.myCard}>
+            <Card style={styles.myCard} onPress={()=>{
+
+                Linking.openURL("mailto:bishal.com")
+            }}>
 
                 <View style={styles.cardContent}>
 
@@ -43,7 +68,7 @@ const Profile = ()=>{
                 </View>
 
             </Card>
-            <Card style={styles.myCard}>
+            <Card style={styles.myCard} onPress={()=>openDail()}>
 
                 <View style={styles.cardContent}>
 
