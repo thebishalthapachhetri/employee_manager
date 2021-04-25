@@ -5,9 +5,10 @@ import {Title,Card,Button} from 'react-native-paper';
 import { MaterialIcons } from '@expo/vector-icons';
 
 
-const Profile = ()=>{
+const Profile = (props)=>{
 
     
+    const {id, name, position, email, phone,salary, picture}= props.route.params.item
     const openDail=()=>{
 
         if(Platform.OS === "android"){
@@ -42,14 +43,14 @@ const Profile = ()=>{
             <Image
                        
                 style={{ width: 140, height: 140, borderRadius: 70, marginTop: -50}}
-                source={{ uri: "https://images.unsplash.com/photo-1584308972272-9e4e7685e80f?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" }}
+                source={{ uri: picture }}
             />
             </View>
 
             <View style={{alignItems:"center", margin:15}}>
 
-                <Title>Bishal Thapa</Title>
-                <Text style={styles.myText}>Web Developer</Text>
+                <Title style={{fontSize:25}}>{name}</Title>
+                <Text style={styles.myText}>{position}</Text>
 
 
             </View>
@@ -63,7 +64,7 @@ const Profile = ()=>{
                 <View style={styles.cardContent}>
 
                     <MaterialIcons name="email" size={32} color="#3498db"/>
-                    <Text style={styles.myText}>bishal.com</Text>
+                    <Text style={styles.myText}>{email}</Text>
 
                 </View>
 
@@ -73,7 +74,7 @@ const Profile = ()=>{
                 <View style={styles.cardContent}>
 
                     <MaterialIcons name="phone" size={32} color="#3498db"/>
-                    <Text style={styles.myText}>0406258574</Text>
+                    <Text style={styles.myText}>{phone}</Text>
 
                 </View>
 
@@ -83,7 +84,7 @@ const Profile = ()=>{
                 <View style={styles.cardContent}>
 
                     <MaterialIcons name="attach-money" size={32} color="#3498db"/>
-                    <Text style={styles.myText}>80k per annum</Text>
+                    <Text style={styles.myText}>{salary}</Text>
 
                 </View>
 
@@ -160,7 +161,7 @@ const styles = StyleSheet.create({
 
     myText:{
 
-        fontSize:18,
+        fontSize:16,
         marginTop:3,
         marginLeft:5
     }

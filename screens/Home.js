@@ -7,14 +7,11 @@ const Home = ({navigation}) => {
 
     const data = [
 
-        { id: 1, name: "bishal", position: "web dev" },
-        { id: 2, name: "shyam", position: "web dev" },
-        { id: 3, name: "hari", position: "web dev" },
-        { id: 4, name: "gita", position: "web dev" },
-        { id: 5, name: "sita", position: "web dev" },
-        { id: 6, name: "sita", position: "web dev" },
-        { id: 7, name: "sita", position: "web dev" },
-       
+        { id:"1", name: "bishal",position: "web dev", email:"bishal@gmail.com", salary:"80K per annum", phone:"0405080545",picture:"https://images.unsplash.com/photo-1552607676-17f088307dce?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=781&q=80"   },
+        { id: "2", name: "rambo",position: "front dev", email:"rambo@gmail.com", salary:"50K per annum", phone:"0405080545",picture:"https://images.unsplash.com/photo-1552607676-17f088307dce?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=781&q=80"   },
+        { id: "3", name: "jackey",position: "back dev", email:"jackey@gmail.com", salary:"60K per annum", phone:"0405080545",picture:"https://images.unsplash.com/photo-1552607676-17f088307dce?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=781&q=80"   },
+        { id: "4", name: "samsun",position: "manager", email:"samsun@gmail.com", salary:"100K per annum", phone:"0405080545",picture:"https://images.unsplash.com/photo-1552607676-17f088307dce?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=781&q=80"   }
+               
     ]
 
     const renderList = ((item) => {
@@ -23,7 +20,7 @@ const Home = ({navigation}) => {
 
             <Card 
              style={styles.mycard}
-             onPress={()=>navigation.navigate("Profile")}
+             onPress={()=>navigation.navigate("Profile",{item})}
              >
                 <View style={styles.cardView}>
                     <Image
@@ -53,7 +50,7 @@ const Home = ({navigation}) => {
 
                     return renderList(item)
                 }}
-                keyExtractor={item => `${item.id}`}
+                keyExtractor={item => item.id}
 
             />
 
@@ -62,7 +59,7 @@ const Home = ({navigation}) => {
                 style={styles.fab}
                 small={false}
                 icon="plus"
-                theme={{colors:{primary:"#3498db"}}}
+                theme={{colors:{accent:"#3498db",primary:"white"}}}
                 
             />
 
