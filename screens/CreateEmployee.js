@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, Modal } from 'react-native';
+import { StyleSheet, Text, View, Modal,Alert } from 'react-native';
 import { TextInput, Button } from 'react-native-paper';
+import * as ImagePicker from 'expo-image-picker';
+import * as Permissions from 'expo-permissions';
 
 
 const CreateEmployee = () => {
@@ -13,6 +15,81 @@ const CreateEmployee = () => {
     const [modal, setModal] = useState(false)
 
 
+
+    const pickFromGallery = async ()=>{
+
+        const {granted} = await Permissions.askAsync(Permissions.MEDIA_LIBRARY)
+        if(granted){
+
+           let data= await ImagePicker.launchImageLibraryAsync({ 
+                mediaTypes:ImagePicker.MediaTypeOptions.Images,
+                allowsEditing:true,
+                aspect:[1,1],
+                quality:0.5
+
+            
+            
+            })
+            console.log(data)
+
+        }else{
+
+            Alert.alert("Permission is required to upload the picture of an employee")
+
+
+        }
+
+
+    }
+
+
+    const pickFromCamera =async()=>{
+
+        const {granted} = await Permissions.askAsync(Permissions.CAMERA)
+        if(granted){
+
+           let data= await ImagePicker.launchCameraAsync({
+                
+                
+                mediaTypes:ImagePicker.MediaTypeOptions.Images,
+                allowsEditing:true,
+                aspect:[1,1],
+                quality:0.5
+
+            
+            
+            })
+            console.log(data)
+
+        }else{
+
+            Alert.alert("Permission is required to upload the picture of an employee")
+
+
+        }
+
+
+    }
+
+
+    const handleUpload =(image)=>{
+
+        const data =new FormData()
+        data.append('file',image)
+        data.append('upload_preset','employeemanager')
+        data.append("cloud_name", "aitcrossplatform")
+
+        fetch("https://api.cloudinary.com/v1_1/aitcrossplatform/image/upload",{
+
+            method:"post",
+            body:data
+        }).then(res=>res.json())
+        then(data=>{
+
+            console.log(data)
+        })
+
+    }
 
     return (
 
@@ -37,7 +114,7 @@ const CreateEmployee = () => {
             <TextInput
                 label='Phone'
                 style={styles.inputStyle}
-                value={email}
+                value={phone}
                 mode="outlined"
                 keyboardType="number-pad"
                 theme={theme}
@@ -87,7 +164,7 @@ const CreateEmployee = () => {
                     icon="camera" 
                     mode="contained" 
                     theme={theme}
-                    onPress={() => console.log("pressed")}>
+                    onPress={() => pickFromCamera()}>
                         Camera
                     </Button>
 
@@ -95,7 +172,7 @@ const CreateEmployee = () => {
                     icon="image-area" 
                     mode="contained" 
                     theme={theme}
-                    onPress={() => console.log("pressed")}>
+                    onPress={() => pickFromGallery()}>
                         Gallery
                     </Button>
 
