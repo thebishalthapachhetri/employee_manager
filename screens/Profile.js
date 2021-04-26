@@ -129,8 +129,14 @@ const Profile = (props)=>{
                     icon="account-edit"
                     mode="contained"
                     theme={theme}  
-                    onPress={() => console.log("pressed")}>
-                            Edit
+                    onPress={() =>{ 
+
+                        props.navigation.navigate("Create",
+                         {_id, name, position, email, phone,salary, picture}
+                        )
+                    
+                    }}>
+                     Edit
                 </Button>
                 <Button 
                     icon="delete"
@@ -140,21 +146,9 @@ const Profile = (props)=>{
                             delete
                 </Button>
 
-                   
-
-
-
             </View>
-
-            
-
-
-
-
         </View>
     )
-
-
 }
 
 const theme = {
