@@ -1,11 +1,22 @@
 import React,{useEffect,useState} from 'react';
 import { StyleSheet, Text, View, Image, FlatList,Alert,ActivityIndicator } from 'react-native';
 import { Title, Card,FAB } from 'react-native-paper'
+import {useSelector,useDispatch} from 'react-redux'
 
 const Home = ({navigation}) => {
 
-    const [data,setData] = useState([])
-    const [loading,setLoading] = useState(true)
+    // const [data,setData] = useState([])
+    // const [loading,setLoading] = useState(true)
+
+    const dispatch = useDispatch()
+
+    const {data,loading} = useSelector((state)=>{
+
+        return state
+
+    })
+
+    console.log(data,loading)
 
     const fetchData = ()=>{
 
@@ -16,29 +27,25 @@ const Home = ({navigation}) => {
         .then(res=>res.json())
         .then(results=>{
 
-            setData(results)
-            setLoading(false)
+            // setData(results)
+            // setLoading(false)
+
+            dispatch({type:"ADD_DATA",payload:results})
+            dispatch({type:"SET_LOADING",payload:false})
+
 
         }).catch(err=>{
 
             Alert.alert("Something went wrong")
         })
+        
 
     }
 
 
     useEffect(()=>{
 
-        fetch("http://10.0.2.2:3000/")
-
-        .then(res=>res.json())
-        .then(results=>{
-
-            setData(results)
-            setLoading(false)
-
-        })
-
+        fetchData()
     },[])
 
     const renderList = ((item) => {

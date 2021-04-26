@@ -5,15 +5,47 @@ import * as ImagePicker from 'expo-image-picker';
 import * as Permissions from 'expo-permissions';
 
 
-const CreateEmployee = ({navigation}) => {
 
-    const [name, setName] = useState("")
-    const [position, setPosition] = useState("")
-    const [phone, setPhone] = useState("")
-    const [email, setEmail] = useState("")
-    const [salary, setSalary] = useState("")
-    const [picture, setPicture] = useState("")
+const CreateEmployee = ({navigation,route}) => {
+
+
+
+    const getDetails = (type)=>{
+
+        if(route.params){
+            switch(type){
+                case "name":
+                    return route.params.name
+
+                case "phone":
+                    return route.params.phone
+                
+                case "position":
+                    return route.params.position
+                
+                case "email":
+                    return route.params.email
+                
+                case "salary":
+                    return route.params.salary
+
+                case "picture":
+                    return route.params.picture
+            }
+
+        }
+
+        return ""
+    }
+    
+    const [name, setName] = useState(getDetails("name"))
+    const [position, setPosition] = useState(getDetails("position"))
+    const [phone, setPhone] = useState(getDetails("phone"))
+    const [email, setEmail] = useState(getDetails("email"))
+    const [salary, setSalary] = useState(getDetails("salary"))
+    const [picture, setPicture] = useState(getDetails("picture"))
     const [modal, setModal] = useState(false)
+    
 
 
     const submitData = ()=>{
@@ -51,6 +83,46 @@ const CreateEmployee = ({navigation}) => {
 
             Alert.alert("Something went wrong")
         })
+
+    }
+
+    const updateData = ()=>{
+
+
+        fetch("http://10.0.2.2:3000/update",{
+
+
+            method:"post",
+            headers:{
+
+                'Content-type': 'application/json'
+
+            },
+            body:JSON.stringify({
+
+                _id:route.params._id,
+                name,
+                position,
+                email,
+                phone,
+                salary,
+                picture
+
+
+            })
+            
+        })
+        .then(res=>res.json())
+        .then(data=>{
+            Alert.alert(`Employee ${data.name} is updated.`)
+            navigation.navigate("Home")
+
+        })
+        .catch(err=>{
+
+            Alert.alert("Something went wrong")
+        })
+
 
     }
 
@@ -158,6 +230,8 @@ const CreateEmployee = ({navigation}) => {
     return (
 
 
+
+
         <View style={styles.root}>
 
             
@@ -213,7 +287,21 @@ const CreateEmployee = ({navigation}) => {
                 Upload
             </Button>
 
-
+            
+            {route.params?
+            
+            <Button 
+            style={styles.inputStyle}
+            icon="content-save" 
+            mode="contained" 
+            theme={theme}
+            onPress={() => updateData()}>
+                Update
+            </Button>
+            
+            
+            :
+            
             <Button 
             style={styles.inputStyle}
             icon="content-save" 
@@ -222,6 +310,10 @@ const CreateEmployee = ({navigation}) => {
             onPress={() => submitData()}>
                 Save
             </Button>
+            
+            }
+
+            
 
             <Modal
                 animationType="slide"
